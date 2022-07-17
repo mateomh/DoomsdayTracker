@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
+import { getGoldPrices } from './utils/api_calls';
 
 function App() {
+  
+  useEffect(() => {
+    getGoldPrices();
+  }, []);
 
   return (
     <div className="App">
