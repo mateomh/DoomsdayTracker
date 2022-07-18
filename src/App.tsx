@@ -1,12 +1,17 @@
 import React, { useEffect } from 'react';
 import './App.css';
-import { getGoldPrices } from './utils/api_calls';
+import { useStoreContext } from './contexts/StoreContext';
+import { getCurrencyPrices, getGoldPrices } from './utils/api_calls';
 
 function App() {
   
   useEffect(() => {
-    getGoldPrices();
+    getCurrencyPrices(10);
   }, []);
+
+  const state = useStoreContext();
+
+  console.log("%%%%%%%%%%%%%%%%%% STATE", state);
 
   return (
     <div className="App">
