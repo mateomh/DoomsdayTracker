@@ -5,7 +5,19 @@ export const initialState = {
   euroPrices: [],
 }
 
-export const storeReducer = (state, action) => {
+interface State {
+  oilPrices: any;
+  goldPrices: any;
+  dollarPrices: any;
+  euroPrices: any;
+}
+
+interface Action {
+  type: string;
+  payload: any;
+}
+
+export const storeReducer = (state: State, action: Action): State => {
   const {type, payload} = action;
   switch (type) {
     case "OIL_ADD_SINGLE_PRICE":

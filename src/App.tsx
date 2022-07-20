@@ -1,12 +1,17 @@
 import React, { useEffect } from 'react';
 import './App.css';
 import { useStoreContext } from './contexts/StoreContext';
-import { getCurrencyPrices, getGoldPrices } from './utils/api_calls';
+import { getCurrencyPrices, getGoldPrices, getOilPrices } from './utils/api_calls';
 
 function App() {
   
+  const getPrices = async () => {
+    const data = await getOilPrices();
+    console.log(data.dataset_data.data[0][1]);
+  }
+
   useEffect(() => {
-    getCurrencyPrices(10);
+    getPrices();
   }, []);
 
   const state = useStoreContext();
