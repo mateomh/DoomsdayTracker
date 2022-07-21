@@ -3,6 +3,7 @@ export const initialState = {
   goldPrices: [],
   dollarPrices: [],
   euroPrices: [],
+  dates: [],
 }
 
 interface State {
@@ -10,6 +11,7 @@ interface State {
   goldPrices: any;
   dollarPrices: any;
   euroPrices: any;
+  dates: any;
 }
 
 interface Action {
@@ -23,19 +25,23 @@ export const storeReducer = (state: State, action: Action): State => {
     case "OIL_ADD_SINGLE_PRICE":
       return {...state, oilPrices: state.oilPrices.push(payload)}
     case "OIL_ADD_PRICES":
-      return {...state, oilPrices: [...state.oilPrices, ...payload]}
+      return {...state, oilPrices: [...payload]}
     case "GOLD_ADD_SINGLE_PRICE":
       return {...state, goldPrices: state.goldPrices.push(payload)}
     case "GOLD_ADD_PRICES":
-      return {...state, goldPrices: [...state.goldPrices, ...payload]}
+      return {...state, goldPrices: [...payload]}
     case "DOLLAR_ADD_SINGLE_PRICE":
       return {...state, dollarPrices: state.dollarPrices.push(payload)}
     case "DOLLAR_ADD_PRICES":
-      return {...state, dollarPrices: [...state.dollarPrices, ...payload]}
+      return {...state, dollarPrices: [...payload]}
     case "EURO_ADD_SINGLE_PRICE":
       return {...state, euroPrices: state.euroPrices.push(payload)}
     case "EURO_ADD_PRICES":
-      return {...state, euroPrices: [...state.euroPrices, ...payload]}
+      return {...state, euroPrices: [...payload]}
+    case "ADD_SINGLE_DATE":
+      return {...state, dates: state.dates.push(payload)}
+    case "ADD_DATES":
+      return {...state, dates: [...payload]}
     default:
       return state;
   }

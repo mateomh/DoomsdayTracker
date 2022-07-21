@@ -1,22 +1,32 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { useStoreContext } from './contexts/StoreContext';
 import { getCurrencyPrices, getGoldPrices, getOilPrices } from './utils/api_calls';
+import { processCurrencyData, processGoldPrices, processOilPrices } from './utils/data_handling';
 
 function App() {
-  
-  const getPrices = async () => {
-    const data = await getOilPrices();
-    console.log(data.dataset_data.data[0][1]);
+  const store = useStoreContext();
+  const [days, setDays] = useState(99);
+
+  const getData = async () => {
+    let data = await getOilPrices();
+    let processedData = processOilPrices(data, days);
+    store.addOilData(processedData);
+
+    data = await getGoldPrices();
+    processedData = processGoldPrices(data, days);
+    store.addGoldData(processedData);
+
+    data = await getCurrencyPrices(10);
+    processCurrencyData(data);
+    // store.addGoldData(processedData);
   }
 
   useEffect(() => {
-    getPrices();
+    getData();
   }, []);
 
-  const state = useStoreContext();
-
-  console.log("%%%%%%%%%%%%%%%%%% STATE", state);
+  console.log("%%%%%%%%%%%%%%%%%% STATE", store);
 
   return (
     <div className="App">

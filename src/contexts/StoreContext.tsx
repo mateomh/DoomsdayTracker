@@ -2,7 +2,15 @@ import React, { useContext, useReducer } from 'react'
 import { initialState, storeReducer } from './reducer';
 import { setOilPrices, setGoldPrices, setDollarPrices, setEuroPrices } from './actions';
 
-const MyStoreContext = React.createContext({});
+const MyStoreContext = React.createContext({} as Value);
+
+export interface Value {
+  state:any;
+  addOilData: (data: any) => void;
+  addGoldData: (data: any) => void;
+  addDollarData: (data: any) => void;
+  addEuroData: (data: any) => void;
+}
 
 interface StoreContextProps {
   children: React.ReactNode;
@@ -30,7 +38,7 @@ export const StoreContext:React.FC<StoreContextProps> = ({children}) => {
     dispatch(setEuroPrices(data))
   }
 
-  const value = {
+  const value:Value = {
     state,
     addOilData,
     addGoldData,
@@ -39,14 +47,14 @@ export const StoreContext:React.FC<StoreContextProps> = ({children}) => {
   }
 
   return (
-    <MyStoreContext.Provider value={value}>
+    <MyStoreContext.Provider value={value as Value}>
       {children}
     </MyStoreContext.Provider>
   )
 }
 
-export const useStoreContext = () => {
-  const context = useContext(MyStoreContext);
+export const useStoreContext = ():Value => {
+  const context = useContext<Value>(MyStoreContext);
 
   if(context === undefined) {
     throw new Error("useStoreContext must be used within the StoreContext component")
