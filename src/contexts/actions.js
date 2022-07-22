@@ -53,3 +53,10 @@ export const setEuroPrices = (data) => {
     payload: data,
   }
 }
+
+export const setFullData = (data) => {
+  return {
+    type: "ADD_FULL_DATA",
+    payload: data,
+  }
+}

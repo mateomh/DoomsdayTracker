@@ -4,6 +4,7 @@ export const initialState = {
   dollarPrices: [],
   euroPrices: [],
   dates: [],
+  fullData: {},
 }
 
 interface State {
@@ -12,6 +13,7 @@ interface State {
   dollarPrices: any;
   euroPrices: any;
   dates: any;
+  fullData: any;
 }
 
 interface Action {
@@ -42,6 +44,8 @@ export const storeReducer = (state: State, action: Action): State => {
       return {...state, dates: state.dates.push(payload)}
     case "ADD_DATES":
       return {...state, dates: [...payload]}
+    case "ADD_FULL_DATA":
+      return {...state, fullData: payload}
     default:
       return state;
   }

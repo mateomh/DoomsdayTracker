@@ -2,28 +2,24 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import { useStoreContext } from './contexts/StoreContext';
 import { getCurrencyPrices, getGoldPrices, getOilPrices } from './utils/api_calls';
-import { processCurrencyData, processGoldPrices, processOilPrices } from './utils/data_handling';
+import { processFullData} from './utils/data_handling';
 
 function App() {
   const store = useStoreContext();
   const [days, setDays] = useState(99);
 
   const getData = async () => {
-    let data = await getOilPrices();
-    let processedData = processOilPrices(data, days);
-    store.addOilData(processedData);
+    const oilData = await getOilPrices();
+    const goldData = await getGoldPrices();
+    const currencyData = await getCurrencyPrices(99);
+    const fullData = processFullData(oilData,goldData, currencyData);
 
-    data = await getGoldPrices();
-    processedData = processGoldPrices(data, days);
-    store.addGoldData(processedData);
-
-    data = await getCurrencyPrices(10);
-    processCurrencyData(data);
-    // store.addGoldData(processedData);
+    store.addFullData(fullData)
   }
 
   useEffect(() => {
     getData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   console.log("%%%%%%%%%%%%%%%%%% STATE", store);

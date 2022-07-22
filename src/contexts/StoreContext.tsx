@@ -1,6 +1,6 @@
 import React, { useContext, useReducer } from 'react'
 import { initialState, storeReducer } from './reducer';
-import { setOilPrices, setGoldPrices, setDollarPrices, setEuroPrices } from './actions';
+import { setOilPrices, setGoldPrices, setDollarPrices, setEuroPrices, setFullData } from './actions';
 
 const MyStoreContext = React.createContext({} as Value);
 
@@ -10,6 +10,7 @@ export interface Value {
   addGoldData: (data: any) => void;
   addDollarData: (data: any) => void;
   addEuroData: (data: any) => void;
+  addFullData: (data: any) => void;
 }
 
 interface StoreContextProps {
@@ -38,12 +39,17 @@ export const StoreContext:React.FC<StoreContextProps> = ({children}) => {
     dispatch(setEuroPrices(data))
   }
 
+  const addFullData = (data: any) => {
+    dispatch(setFullData(data));
+  }
+
   const value:Value = {
     state,
     addOilData,
     addGoldData,
     addDollarData,
     addEuroData,
+    addFullData,
   }
 
   return (
