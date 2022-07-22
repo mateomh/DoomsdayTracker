@@ -48,3 +48,26 @@ export const processFullData = (
 
   return data;
 }
+
+export const formatChartData = (fullData) => {
+  const dates = Object.keys(fullData);
+  const oil = [];
+  const gold = [];
+  const cop = [];
+  const eur = [];
+
+  for(let i = 0; i < dates.length; i++) {
+    fullData[dates[i]].oil ? oil.push(fullData[dates[i]].oil) : oil.push(0)
+    fullData[dates[i]].gold ? gold.push(fullData[dates[i]].gold) : gold.push(0)
+    fullData[dates[i]].COP ? cop.push(fullData[dates[i]].COP) : cop.push(0)
+    fullData[dates[i]].EUR ? eur.push(fullData[dates[i]].COP * fullData[dates[i]].EUR) : eur.push(0)
+  }
+
+  return {
+    dates,
+    oil,
+    gold,
+    cop,
+    eur,
+  }
+}
