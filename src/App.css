@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  background-color: #282c34;
+  height: fit-content;
 }
 
 .App-logo {
@@ -35,4 +37,25 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.DaysBarContainer {
+  display: flex;
+  width: 100%;
+  height: 20vh;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.DaysButton {
+  border: 2px solid goldenrod;
+  color: gold;
+  border-radius: 5px;
+  padding: 2vh 2vw;
+  cursor: pointer;
+}
+
+.DaysButton:hover, .Selected {
+  background-color: goldenrod;
+  color:#282c34;
 }

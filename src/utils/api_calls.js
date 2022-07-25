@@ -17,24 +17,28 @@ const makeApiCall = (url) => {
 
 export const getOilPrices = async () => {
   const oilUrl = NASDAQ_API_BASE_URL.concat(nasdaqDataPoints.Oil,NASDAQ_API_ENDPART_URL);
-  const {data} = await makeApiCall(oilUrl);
-  // console.log(data);
-  return data;
+  return makeApiCall(oilUrl);
 };
 
 export const getGoldPrices = async () => {
   const goldUrl = NASDAQ_API_BASE_URL.concat(nasdaqDataPoints.Gold,NASDAQ_API_ENDPART_URL);
-  const {data} = await makeApiCall(goldUrl);
-  // console.log(data);
-  return data;
+  return makeApiCall(goldUrl);
 };
 
 export const getCurrencyPrices = async (days) => {
-  const endDate = new Date();
-  const startDate = new Date(endDate - (days*24*60*60*1000));
-  const dates = `&start_date=${startDate.toISOString()}&end_date=${endDate.toISOString()}`;
-  const currUrl = EXCHANGERATE_API_BASE_URL.concat(dates);
-  const {data} = await makeApiCall(currUrl);
-  // console.log(data);
-  return data;
+  let resultData = {};
+  let endDate = new Date();
+
+  const loopTimes = Math.ceil(days / 365);
+
+  for(let i=0; i < loopTimes; i ++) {
+    const startDate = new Date(endDate - (365*24*60*60*1000));
+    const dates = `&start_date=${startDate.toISOString()}&end_date=${endDate.toISOString()}`;
+    const currUrl = EXCHANGERATE_API_BASE_URL.concat(dates);
+    const {data} = await makeApiCall(currUrl);
+    resultData = {...resultData, ...data.rates}
+    endDate = startDate;
+  }
+
+  return resultData;
 };
