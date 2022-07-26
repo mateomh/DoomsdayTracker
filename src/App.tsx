@@ -3,9 +3,10 @@ import './App.css';
 import ChartComponent from './components/ChartComponent';
 import DaysBar from './components/DaysBar';
 import DaysButton from './components/DaysButton';
+import NormalizedChartComponent from './components/NormalizedChartComponent';
 import { useStoreContext } from './contexts/StoreContext';
 import { getCurrencyPrices, getGoldPrices, getOilPrices } from './utils/api_calls';
-import { processFullData} from './utils/data_handling';
+import { processFullData, processGoldPrices, processOilPrices} from './utils/data_handling';
 
 function App() {
   const store = useStoreContext();
@@ -18,12 +19,12 @@ function App() {
   ]
 
   const getData = async () => {
-    const {data: oilData} = await getOilPrices();
-    const {data: goldData} = await getGoldPrices();
+    let {data} = await getOilPrices();
+    const oilData = processOilPrices(data, days);
+    let {data: data2} = await getGoldPrices();
+    const goldData = processGoldPrices(data2, days);
     const currencyData = await getCurrencyPrices(days);
-    // console.log("%%%%%%%%%%%%%% CURRENCY", currencyData);
     const fullData = processFullData(oilData,goldData, currencyData, days);
-    console.log("%%%%%%%%%%%%%% DATA", fullData);
     store.addFullData(fullData)
   }
 
@@ -34,7 +35,6 @@ function App() {
 
   return (
     <div className="App">
-      <ChartComponent />
       <DaysBar>
         {
           buttonContents.map((content) => {
@@ -50,6 +50,9 @@ function App() {
           })
         }
       </DaysBar>
+      <ChartComponent />
+      <hr/>
+      <NormalizedChartComponent />
     </div>
   );
 }

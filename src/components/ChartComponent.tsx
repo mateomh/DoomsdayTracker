@@ -42,7 +42,7 @@ const ChartComponent:React.FC = () => {
       },
       title: {
         display: true,
-        text: 'Chart.js Line Chart',
+        text: 'FULL DATA',
       },
     },
   };
