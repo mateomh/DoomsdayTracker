@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import './App.css';
 import ChartComponent from './components/ChartComponent';
 import DaysBar from './components/DaysBar';
@@ -11,11 +12,12 @@ import { processFullData, processGoldPrices, processOilPrices} from './utils/dat
 function App() {
   const store = useStoreContext();
   const [days, setDays] = useState(180);
+  const { t } = useTranslation();
   const buttonContents = [
-    {label: "6 months", value: 180},
-    {label: "1 year", value: 365},
-    {label: "3 years", value: 1095},
-    {label: "5 years", value: 1825}
+    {label: "6", value: 180},
+    {label: "1", value: 365},
+    {label: "3", value: 1095},
+    {label: "5", value: 1825}
   ]
 
   const getData = async () => {
@@ -41,7 +43,7 @@ function App() {
             return(
               <DaysButton
                 key={content.label}
-                text={content.label}
+                text={content.label === "6" ? t("button.months", {value: content.label}) : t("button.years", {value: content.label})}
                 value={content.value}
                 setDays={setDays}
                 selected={days === content.value}

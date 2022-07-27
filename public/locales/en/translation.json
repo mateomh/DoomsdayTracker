@@ -1,0 +1,6 @@
+{
+  "button": {
+    "months": "{{value}} months",
+    "years": "{{value}} years"
+  }
+}
